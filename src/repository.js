@@ -89,8 +89,11 @@ const repository = {
         });
     },
     update: (id, item) => {
-        var data = window.localStorage.getItem('data');
-        console.log(id,item);
+        //var data = window.localStorage.getItem('data');
+       
+        //item.push(id);
+        item['id']=id;
+        console.log(item);
         // //console.log(item);
         // const list = JSON.parse(data);
         // const currentItem = list.find(x => x.id === id);
@@ -99,7 +102,7 @@ const repository = {
         // });
         // //console.log(currentItem);
         // window.localStorage.setItem('data', JSON.stringify(list));
-        axios.put("http://localhost:8080/updateNodeData",{id,item})
+        axios.put("http://localhost:8080/updateNodeData",item)
         .then(response => {
             console.log("Success..");
             console.log(response);
