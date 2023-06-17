@@ -1,3 +1,4 @@
+import { waitFor } from "@testing-library/react";
 import axios from "axios";
 
 
@@ -18,12 +19,12 @@ const repository = {
         axios.get("http://localhost:8080/getNextNode")
         .then(response => {
             vnextid=response.data;
-            console.log(vnextid);
+            //console.log(vnextid);
         })
         .catch(error => {
-            console.log(error);
+           // console.log(error);
         })
-        return 0;
+        return vnextid;
 
 
     },
@@ -51,11 +52,11 @@ const repository = {
         axios.post("http://localhost:8080/nodes",item)
         .then(response => {
             console.log("Success");
-            console.log(response);
+            //console.log(response);
         })
         .catch(error => {
             console.log("failure");
-            console.log(error);
+            //console.log(error);
         });
         
         return item;
@@ -91,7 +92,7 @@ const repository = {
     update: (id, item) => {
         //var data = window.localStorage.getItem('data');
        
-        //item.push(id);
+        
         item['id']=id;
         console.log(item);
         // //console.log(item);
@@ -105,11 +106,11 @@ const repository = {
         axios.put("http://localhost:8080/updateNodeData",item)
         .then(response => {
             console.log("Success..");
-            console.log(response);
+            //console.log(response);
         })
         .catch(error =>{
             console.log("Failure due to error");
-            console.log(error);
+           // console.log(error);
         });
         return item;
     },
@@ -122,13 +123,41 @@ const repository = {
         return repository.add(item);
     },
     getList: (filter) => {
-        const [key, value] = Object.entries(filter)[0];
-        const data = window.localStorage.getItem('data');
-        if (!data) {
-            return [];
-        }
-        const list = JSON.parse(data);
-        const result = list.filter(x => x[key] === value);
+        //databse lo unna motham data antha techukovali...
+        // console.log("get list executed..");
+        // var result={};
+        // console.log(filter);
+            const [key, value] = Object.entries(filter)[0];
+            const data = window.localStorage.getItem('data');
+            if (!data) {
+                return [];
+            }
+            const list = JSON.parse(data);
+            //console.log(list);
+            var result = list.filter(x => x[key] === value);
+            // //console.log(result);
+        var result1=[];
+      // console.log(allNodes());
+      axios.get("http://localhost:8080/nodes")
+      .then(response => {
+          console.log("fetching all items successfull..");
+          //console.log(response);
+         result= response;
+          //console.log(result1);
+      })
+      .catch(error=>{
+          console.log("fetching failure....");
+          return "error"
+      });
+        // async function allNodes(){
+          
+        // }
+       
+        //onsole.log("after fetchjing")
+        //console.log(result1);
+        //console.log(result);
+        //console.log("********************");
+        console.log(result1);
         return result;
     },
     getItem: (id) => {
